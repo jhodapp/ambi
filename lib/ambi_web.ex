@@ -24,6 +24,8 @@ defmodule AmbiWeb do
       import Plug.Conn
       import AmbiWeb.Gettext
       alias AmbiWeb.Router.Helpers, as: Routes
+
+      import Phoenix.LiveView.Controller
     end
   end
 

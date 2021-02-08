@@ -17,13 +17,15 @@ defmodule AmbiWeb.Router do
   scope "/", AmbiWeb do
     pipe_through :browser
 
-    live "/", PageLive, :index
+    live "/", ReadingLive
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", AmbiWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", AmbiWeb do
+    pipe_through :api
+
+    # API endpoint to add a new sensor reading to the database
+    post "/readings/add", ApiController, :add_reading
+  end
 
   # Enables LiveDashboard only for development
   #
