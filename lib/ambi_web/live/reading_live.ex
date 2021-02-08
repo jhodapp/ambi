@@ -4,22 +4,18 @@ defmodule AmbiWeb.ReadingLive do
   require Logger
 
   def mount(_params, _session, socket) do
-    #Presence.track(self(), @presence_topic, socket.id, %{})
-    #Ambi.Endpoint.subscribe(@presence_topic)
     Logger.debug "mount() called, subscribing to :added event"
     Ambi.subscribe()
 
     {:ok, assign(socket, %{reading: Ambi.get_reading()})}
   end
 
-  #def handle_info({Ambi.PubSub, :added, _}, socket) do
   def handle_info(:added, socket) do
     Logger.debug "Received :added event message"
     {:noreply, assign(socket, %{reading: Ambi.get_reading()})}
   end
 
   def render(assigns) do
-    #Ambi.PageView.render("reading.html", assigns)
     ~L"""
     <section class="phx-hero">
       <h1>Live Readings</h1>
