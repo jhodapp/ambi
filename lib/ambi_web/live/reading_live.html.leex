@@ -1,0 +1,81 @@
+<main role="main" class="container">
+  <p class="alert alert-info" role="alert"
+    phx-click="lv:clear-flash"
+    phx-value-key="info"><%= live_flash(@flash, :info) %></p>
+
+  <p class="alert alert-danger" role="alert"
+    phx-click="lv:clear-flash"
+    phx-value-key="error"><%= live_flash(@flash, :error) %></p>
+
+  <div class="tile is-ancestor">
+    <div class="tile is-vertical is-12">
+      <div class="tile">
+        <div class="tile is-parent is-vertical">
+          <article class="tile is-child notification is-primary">
+            <p class="title">Temperature</p>
+            <p class="subtitle"><%= @reading.temperature |> Decimal.from_float() |> Decimal.round(1) %>°C</p>
+          </article>
+          <article class="tile is-child notification is-primary">
+            <p class="title">Avg Temperature</p>
+            <p class="subtitle"><%= @reading.average_temp |> Decimal.from_float() |> Decimal.round(1) %>°C</p>
+          </article>
+          <article class="tile is-child notification is-primary">
+            <p class="title">Max Temperature</p>
+            <p class="subtitle"><%= @reading.min_temp |> Decimal.from_float() |> Decimal.round(1) %>°C</p>
+          </article>
+          <article class="tile is-child notification is-primary">
+            <p class="title">Min Temperature</p>
+            <p class="subtitle"><%= @reading.max_temp |> Decimal.from_float() |> Decimal.round(1) %>°C</p>
+          </article>
+        </div>
+        <div class="tile is-parent is-vertical">
+          <article class="tile is-child notification is-info">
+            <p class="title">Humidity</p>
+            <p class="subtitle"><%= @reading.humidity |> Decimal.from_float() |> Decimal.round(1) %>%</p>
+          </article>
+          <article class="tile is-child notification is-info">
+            <p class="title">Avg Humidity</p>
+            <p class="subtitle"><%= @reading.average_humidity |> Decimal.from_float() |> Decimal.round(1) %>%</p>
+          </article>
+          <article class="tile is-child notification is-info">
+            <p class="title">Max Humidity</p>
+            <p class="subtitle"><%= @reading.min_humidity |> Decimal.from_float() |> Decimal.round(1) %>%</p>
+          </article>
+          <article class="tile is-child notification is-info">
+            <p class="title">Min Humidity</p>
+            <p class="subtitle"><%= @reading.max_humidity |> Decimal.from_float() |> Decimal.round(1) %>%</p>
+          </article>
+        </div>
+        <div class="tile is-parent is-vertical">
+          <article class="tile is-child notification is-warning">
+            <p class="title">Pressure</p>
+            <p class="subtitle"><%= @reading.pressure %> mb</p>
+          </article>
+          <article class="tile is-child notification
+            <%= cond do %>
+              <%= @reading.air_purity == "Fresh Air" -> %>
+                is-success
+              <%= @reading.air_purity == "Low Pollution" -> %>
+                is-warning
+              <%= @reading.air_purity == "High Pollution" -> %>
+                is-warning
+              <%= @reading.air_purity == "Dangerous Pollution" -> %>
+                is-danger
+            <%= end %>
+          ">
+            <p class="title">Air Purity</p>
+            <p class="subtitle"><%= @reading.air_purity %></p>
+          </article>
+          <article class="tile is-child notification is-warning">
+            <p class="title">Dust Concentration</p>
+            <p class="subtitle"><%= @reading.dust_concentration %> pcs/ltr</p>
+          </article>
+          <article class="tile is-child notification is-warning">
+            <p class="title">Total Readings</p>
+            <p class="subtitle"><%= @reading.readings_count %></p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
