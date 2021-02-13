@@ -14,7 +14,9 @@ defmodule Ambi.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Ambi.PubSub},
       # Start the Endpoint (http/https)
-      AmbiWeb.Endpoint
+      AmbiWeb.Endpoint,
+      # Start our timer module
+      Ambi.Timer
       # Start a worker by calling: Ambi.Worker.start_link(arg)
       # {Ambi.Worker, arg}
     ]

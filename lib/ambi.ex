@@ -17,8 +17,9 @@ defmodule Ambi do
     %Ambi.Reading{}
     |> Ambi.Reading.changeset(attrs)
     |> Repo.insert()
-    broadcast_change(:added)
-    Logger.debug "Added new reading and called broadcast_change()"
+    #broadcast_change(:added)
+    #Logger.debug "Added new reading and called broadcast_change()"
+    Logger.debug "Added new reading to the DB"
   end
 
   def get_reading() do
@@ -112,7 +113,7 @@ defmodule Ambi do
     """
   end
 
-  defp broadcast_change(event) do
+  def broadcast_change(event) do
     PubSub.broadcast(Ambi.PubSub, @topic, event)
     Logger.debug """
     Broadcast details:

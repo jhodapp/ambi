@@ -4,7 +4,7 @@ defmodule AmbiWeb.ReadingLive do
   require Logger
 
   def mount(_params, _session, socket) do
-    Logger.debug "mount() called, subscribing to :added event"
+    Logger.debug "ReadingLive.mount() called, subscribing PubSub topic"
     Ambi.subscribe()
 
     {:ok, assign(socket, %{reading: Ambi.get_reading()})}
@@ -12,6 +12,12 @@ defmodule AmbiWeb.ReadingLive do
 
   def handle_info(:added, socket) do
     Logger.debug "Received :added event message"
+    #{:noreply, assign(socket, %{reading: Ambi.get_reading()})}
+    {:noreply, assign(socket, %{})}
+  end
+
+  def handle_info(:reading_refresh, socket) do
+    Logger.debug "Received :refresh_reading event message"
     {:noreply, assign(socket, %{reading: Ambi.get_reading()})}
   end
 
