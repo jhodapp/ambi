@@ -16,7 +16,7 @@ defmodule Ambi.Timer do
 
   def handle_info(:update, _time) do
     broadcast()
-    schedule_timer(10_000)
+    schedule_timer(5_000)
     {:noreply, 0}
   end
 

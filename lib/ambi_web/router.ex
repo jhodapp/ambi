@@ -18,6 +18,7 @@ defmodule AmbiWeb.Router do
     pipe_through :browser
 
     live "/", ReadingLive
+    live "/about", AboutController
   end
 
   scope "/api", AmbiWeb do
