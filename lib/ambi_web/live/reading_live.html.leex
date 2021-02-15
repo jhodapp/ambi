@@ -11,7 +11,7 @@
     <div class="tile is-vertical is-12">
       <div class="tile">
         <div class="tile is-parent is-vertical">
-          <article class="tile is-child notification is-primary">
+          <article class="tile is-child notification">
             <p class="title">Temperature</p>
             <p class="subtitle"><%= @reading.temperature |> Decimal.from_float() |> Decimal.round(1) %>°C</p>
           </article>
@@ -29,7 +29,7 @@
           </article>
         </div>
         <div class="tile is-parent is-vertical">
-          <article class="tile is-child notification is-info">
+          <article class="tile is-child notification">
             <p class="title">Humidity</p>
             <p class="subtitle"><%= @reading.humidity |> Decimal.from_float() |> Decimal.round(1) %>%</p>
           </article>
@@ -39,18 +39,19 @@
           </article>
           <article class="tile is-child notification is-info">
             <p class="title">Max Humidity</p>
-            <p class="subtitle"><%= @reading.min_humidity |> Decimal.from_float() |> Decimal.round(1) %>%</p>
+            <p class="subtitle"><%= @reading.max_humidity |> Decimal.from_float() |> Decimal.round(1) %>%</p>
           </article>
           <article class="tile is-child notification is-info">
             <p class="title">Min Humidity</p>
-            <p class="subtitle"><%= @reading.max_humidity |> Decimal.from_float() |> Decimal.round(1) %>%</p>
+            <p class="subtitle"><%= @reading.min_humidity |> Decimal.from_float() |> Decimal.round(1) %>%</p>
           </article>
         </div>
         <div class="tile is-parent is-vertical">
-          <article class="tile is-child notification is-warning">
+          <article class="tile is-child notification">
             <p class="title">Pressure</p>
             <p class="subtitle"><%= @reading.pressure %> mb</p>
           </article>
+          <!-- FIXME: move this logic into the ReadingLiveController -->
           <article class="tile is-child notification
             <%= cond do %>
               <%= @reading.air_purity == "Fresh Air" -> %>
@@ -68,7 +69,7 @@
           </article>
           <article class="tile is-child notification is-warning">
             <p class="title">Dust Concentration</p>
-            <p class="subtitle"><%= @reading.dust_concentration %> pcs/ltr</p>
+            <p class="subtitle"><%= @reading.dust_concentration |> Decimal.from_float() |> Decimal.round(0) %> pcs/ltr</p>
           </article>
           <article class="tile is-child notification is-warning">
             <p class="title">Total Readings</p>

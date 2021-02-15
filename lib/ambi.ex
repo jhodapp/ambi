@@ -22,6 +22,10 @@ defmodule Ambi do
     Logger.debug "Added new reading to the DB"
   end
 
+  def reset_readings() do
+    Repo.reset_readings(Ambi.Reading)
+  end
+
   def get_reading() do
     %{temperature: get_last_temp(),
       humidity: get_last_humidity(),

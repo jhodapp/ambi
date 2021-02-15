@@ -50,12 +50,16 @@
                   Report an issue
                 </a>
 
-              <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
-                <hr class="navbar-divider">
-                <a class="navbar-item" href="<%= Routes.live_dashboard_path(@conn, :home) %>">
-                  Phoenix LiveDashboard
-                </a>
-              <% end %>
+                <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
+                  <hr class="navbar-divider">
+                  <a class="navbar-item" href="<%= Routes.live_dashboard_path(@conn, :home) %>">
+                    Phoenix LiveDashboard
+                  </a>
+               <% end %>
+               <hr class="navbar-divider">
+                 <a class="navbar-item" href="/api/readings/reset">
+                    Reset Readings Data
+                 </a>
               </div>
             </div>
           </div>
