@@ -26,6 +26,7 @@ defmodule AmbiWeb.Router do
 
     # API endpoint to add a new sensor reading to the database
     post "/readings/add", ApiController, :add_reading
+    get "/readings/reset", ApiController, :reset
   end
 
   # Enables LiveDashboard only for development
