@@ -67,11 +67,11 @@
             <p class="title">Air Purity</p>
             <p class="subtitle"><%= @reading.air_purity %></p>
           </article>
-          <article class="tile is-child notification is-warning">
+          <article class="tile is-child notification">
             <p class="title">Dust Concentration</p>
             <p class="subtitle"><%= @reading.dust_concentration |> Decimal.from_float() |> Decimal.round(0) %> pcs/ltr</p>
           </article>
-          <article class="tile is-child notification is-warning">
+          <article class="tile is-child notification">
             <p class="title">Total Readings</p>
             <p class="subtitle"><%= @reading.readings_count %></p>
           </article>
