@@ -27,15 +27,17 @@ defmodule Ambi do
   end
 
   def get_reading() do
-    %{temperature: get_last_temp(),
-      humidity: get_last_humidity(),
-      pressure: get_last_pressure(),
-      dust_concentration: get_last_dust_concentration(),
-      air_purity: get_last_air_purity(),
+    %{temperature: get_temp(),
+      humidity: get_humidity(),
+      pressure: get_pressure(),
+      dust_concentration: get_dust_concentration(),
+      air_purity: get_air_purity(),
       average_temp: get_average_temp(),
+      average_temp_24hrs: get_average_temp_24hrs(),
       max_temp: get_max_temp(),
       min_temp: get_min_temp(),
       average_humidity: get_average_humidity(),
+      average_humidity_24hrs: get_average_humidity_24hrs(),
       max_humidity: get_max_humidity(),
       min_humidity: get_min_humidity(),
       readings_count: get_readings_count(),
@@ -44,28 +46,53 @@ defmodule Ambi do
     }
   end
 
-  def get_last_temp() do
+  def get_temp() do
     get_last_row().temperature
   end
 
-  def get_last_humidity() do
+  def get_humidity() do
+    query =
+      from Ambi.Reading,
+        order_by: [desc: :humidity],
+        limit: 2
+    humidities = Repo.all(query)
+    Logger.debug "humidities: #{inspect(humidities)}"
+    Logger.debug "humidity count: #{inspect(Repo.aggregate(query, :count, :id))}"
+    Repo.aggregate(query, :avg, :humidity)
     get_last_row().humidity
   end
 
-  def get_last_pressure() do
+  def get_pressure() do
     get_last_row().pressure
   end
 
-  def get_last_dust_concentration() do
+  def get_dust_concentration() do
     get_last_row().dust_concentration
   end
 
-  def get_last_air_purity() do
+  def get_air_purity() do
     get_last_row().air_purity
   end
 
+  # Gets the average temperature from the DB over all sensor readings
   def get_average_temp() do
     Repo.aggregate(Ambi.Reading, :avg, :temperature)
+  end
+
+  # Gets the average temperature from the DB over the last 24 hour period
+  def get_average_temp_24hrs() do
+    one_day_ago = Timex.shift(Timex.now, hours: -24, minutes: 0)
+    Logger.debug "24 hrs ago: #{inspect(one_day_ago)}"
+    Logger.debug "now: #{inspect(Timex.now)}"
+    query =
+      from r in Ambi.Reading,
+        order_by: [desc: :inserted_at],
+        where: r.inserted_at >= ^one_day_ago
+    Logger.debug "query: #{inspect(query)}"
+
+    Logger.debug "total count: #{inspect(Repo.aggregate(Ambi.Reading, :count, :id))}"
+    Logger.debug "24 hour count: #{inspect(Repo.aggregate(query, :count, :id))}"
+    Repo.aggregate(query, :avg, :temperature)
   end
 
   def get_max_temp() do
@@ -76,8 +103,39 @@ defmodule Ambi do
     Repo.aggregate(Ambi.Reading, :min, :temperature)
   end
 
+  def get_temperatures_over_120s() do
+    two_mins_ago = Timex.shift(Timex.now, hours: 0, minutes: -4)
+
+    query =
+      from r in Ambi.Reading,
+      order_by: [desc: :inserted_at],
+      where: r.inserted_at >= ^two_mins_ago,
+      select: {r.temperature},
+      limit: 24 # temporary
+
+    results = Repo.all(query)
+    Logger.debug "results: #{inspect(results)}"
+    results
+  end
+
   def get_average_humidity() do
     Repo.aggregate(Ambi.Reading, :avg, :humidity)
+  end
+
+ # Gets the average humidity from the DB over the last 24 hour period
+  def get_average_humidity_24hrs() do
+    one_day_ago = Timex.shift(Timex.now, hours: -24, minutes: 0)
+    Logger.debug "24 hrs ago: #{inspect(one_day_ago)}"
+    Logger.debug "now: #{inspect(Timex.now)}"
+    query =
+      from r in Ambi.Reading,
+        order_by: [desc: :inserted_at],
+        where: r.inserted_at >= ^one_day_ago
+    Logger.debug "query: #{inspect(query)}"
+
+    Logger.debug "total count: #{inspect(Repo.aggregate(Ambi.Reading, :count, :id))}"
+    Logger.debug "24 hour count: #{inspect(Repo.aggregate(query, :count, :id))}"
+    Repo.aggregate(query, :avg, :humidity)
   end
 
   def get_max_humidity() do
@@ -86,6 +144,21 @@ defmodule Ambi do
 
   def get_min_humidity() do
     Repo.aggregate(Ambi.Reading, :min, :humidity)
+  end
+
+  def get_humidities_over_120s() do
+    two_mins_ago = Timex.shift(Timex.now, hours: 0, minutes: -2)
+
+    query =
+      from r in Ambi.Reading,
+      order_by: [desc: :inserted_at],
+      where: r.inserted_at >= ^two_mins_ago,
+      select: {r.humidity},
+      limit: 24 # temporary
+
+    results = Repo.all(query)
+    Logger.debug "results: #{inspect(results)}"
+    results
   end
 
   def get_last_inserted_at() do

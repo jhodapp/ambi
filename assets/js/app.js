@@ -18,7 +18,77 @@ import NProgress from "nprogress"
 import {LiveSocket} from "phoenix_live_view"
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
-let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken}})
+
+let hooks = {}
+hooks.temperature_chart = {
+    mounted() {
+        var ctx = this.el.getContext('2d');
+
+        var temperature_chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'bar',
+            // The data for our dataset
+            data: {
+                labels: ['0s', '5s', '10s', '15s',
+                         '20s', '25s', '30s', '35s',
+                         '40s', '45s', '50s', '55s',
+                         '60s', '65s', '70s', '75s',
+                         '80s', '85s', '90s', '95s',
+                         '100s', '105s', '110s', '115s',
+                         '120s'
+                        ],
+                datasets: [{
+                    label: 'Temperature °C',
+                    backgroundColor: 'rgb(34, 208, 178)',
+                    borderColor: 'rgb(34, 208, 178)'
+                }]
+            },
+            // Configuration options go here
+            options: {}
+        })
+
+        this.handleEvent("temperature_points", ({temperature_points}) => {
+            temperature_chart.data.datasets[0].data = temperature_points
+            temperature_chart.update()
+        })
+    }
+}
+
+hooks.humidity_chart = {
+    mounted() {
+        var ctx = this.el.getContext('2d');
+
+        var humidity_chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'line',
+            // The data for our dataset
+            data: {
+                labels: ['0s', '5s', '10s', '15s',
+                            '20s', '25s', '30s', '35s',
+                            '40s', '45s', '50s', '55s',
+                            '60s', '65s', '70s', '75s',
+                            '80s', '85s', '90s', '95s',
+                            '100s', '105s', '110s', '115s',
+                            '120s'
+                        ],
+                datasets: [{
+                    label: 'Humidity %',
+                    backgroundColor: 'rgb(57, 154, 218)',
+                    borderColor: 'rgb(200, 200, 200)'
+                }]
+            },
+            // Configuration options go here
+            options: {}
+        });
+
+        this.handleEvent("humidity_points", ({humidity_points}) => {
+            humidity_chart.data.datasets[0].data = humidity_points
+            humidity_chart.update()
+        })
+    }
+}
+
+let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken}, hooks})
 
 // Show progress bar on live navigation and form submits
 window.addEventListener("phx:page-loading-start", info => NProgress.start())
@@ -32,4 +102,3 @@ liveSocket.connect()
 // >> liveSocket.enableLatencySim(1000)  // enabled for duration of browser session
 // >> liveSocket.disableLatencySim()
 window.liveSocket = liveSocket
-

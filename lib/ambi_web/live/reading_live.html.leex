@@ -20,12 +20,16 @@
             <p class="subtitle"><%= @reading.average_temp |> Decimal.from_float() |> Decimal.round(1) %>°C</p>
           </article>
           <article class="tile is-child notification is-primary">
+            <p class="title">24 hr Avg Temperature</p>
+            <p class="subtitle"><%= @reading.average_temp_24hrs |> Decimal.from_float() |> Decimal.round(1) %>°C</p>
+          </article>
+          <article class="tile is-child notification is-primary">
             <p class="title">Max Temperature</p>
-            <p class="subtitle"><%= @reading.min_temp |> Decimal.from_float() |> Decimal.round(1) %>°C</p>
+            <p class="subtitle"><%= @reading.max_temp |> Decimal.from_float() |> Decimal.round(1) %>°C</p>
           </article>
           <article class="tile is-child notification is-primary">
             <p class="title">Min Temperature</p>
-            <p class="subtitle"><%= @reading.max_temp |> Decimal.from_float() |> Decimal.round(1) %>°C</p>
+            <p class="subtitle"><%= @reading.min_temp |> Decimal.from_float() |> Decimal.round(1) %>°C</p>
           </article>
         </div>
         <div class="tile is-parent is-vertical">
@@ -36,6 +40,10 @@
           <article class="tile is-child notification is-info">
             <p class="title">Avg Humidity</p>
             <p class="subtitle"><%= @reading.average_humidity |> Decimal.from_float() |> Decimal.round(1) %>%</p>
+          </article>
+          <article class="tile is-child notification is-info">
+            <p class="title">24 hr Avg Humidity</p>
+            <p class="subtitle"><%= @reading.average_humidity_24hrs |> Decimal.from_float() |> Decimal.round(1) %>%</p>
           </article>
           <article class="tile is-child notification is-info">
             <p class="title">Max Humidity</p>
@@ -57,7 +65,7 @@
               <%= @reading.air_purity == "Fresh Air" -> %>
                 is-success
               <%= @reading.air_purity == "Low Pollution" -> %>
-                is-warning
+                is-success
               <%= @reading.air_purity == "High Pollution" -> %>
                 is-warning
               <%= @reading.air_purity == "Dangerous Pollution" -> %>
@@ -76,6 +84,23 @@
             <p class="subtitle"><%= @reading.readings_count %></p>
           </article>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <hr/>
+
+  <div class="columns">
+    <div class="column">
+      <div class="box" phx-update="ignore">
+        <canvas id="temperatureChart" phx-hook="temperature_chart"></canvas>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4"></script>
+      </div>
+    </div>
+    <div class="column">
+      <div class="box" phx-update="ignore">
+        <canvas id="humidityChart" phx-hook="humidity_chart"></canvas>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4"></script>
       </div>
     </div>
   </div>
