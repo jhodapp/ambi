@@ -13,51 +13,51 @@
         <div class="tile is-parent is-vertical">
           <article class="tile is-child notification">
             <p class="title">Temperature</p>
-            <p class="subtitle"><%= @reading.temperature |> Decimal.from_float() |> Decimal.round(1) %>°C</p>
+            <p class="subtitle"><%= Float.round(@reading.temperature, 1) %>°C</p>
           </article>
           <article class="tile is-child notification is-primary">
             <p class="title">Avg Temperature</p>
-            <p class="subtitle"><%= @reading.average_temp |> Decimal.from_float() |> Decimal.round(1) %>°C</p>
+            <p class="subtitle"><%= Float.round(@reading.average_temp, 1) %>°C</p>
           </article>
           <article class="tile is-child notification is-primary">
             <p class="title">24 hr Avg Temperature</p>
-            <p class="subtitle"><%= @reading.average_temp_24hrs |> Decimal.from_float() |> Decimal.round(1) %>°C</p>
+            <p class="subtitle"><%= Float.round(@reading.average_temp_24hrs, 1) %>°C</p>
           </article>
           <article class="tile is-child notification is-primary">
             <p class="title">Max Temperature</p>
-            <p class="subtitle"><%= @reading.max_temp |> Decimal.from_float() |> Decimal.round(1) %>°C</p>
+            <p class="subtitle"><%= Float.round(@reading.max_temp) %>°C</p>
           </article>
           <article class="tile is-child notification is-primary">
             <p class="title">Min Temperature</p>
-            <p class="subtitle"><%= @reading.min_temp |> Decimal.from_float() |> Decimal.round(1) %>°C</p>
+            <p class="subtitle"><%= Float.round(@reading.min_temp, 1) %>°C</p>
           </article>
         </div>
         <div class="tile is-parent is-vertical">
           <article class="tile is-child notification">
             <p class="title">Humidity</p>
-            <p class="subtitle"><%= @reading.humidity |> Decimal.from_float() |> Decimal.round(1) %>%</p>
+            <p class="subtitle"><%= Float.round(@reading.humidity, 1) %>%</p>
           </article>
           <article class="tile is-child notification is-info">
             <p class="title">Avg Humidity</p>
-            <p class="subtitle"><%= @reading.average_humidity |> Decimal.from_float() |> Decimal.round(1) %>%</p>
+            <p class="subtitle"><%= Float.round(@reading.average_humidity, 1) %>%</p>
           </article>
           <article class="tile is-child notification is-info">
             <p class="title">24 hr Avg Humidity</p>
-            <p class="subtitle"><%= @reading.average_humidity_24hrs |> Decimal.from_float() |> Decimal.round(1) %>%</p>
+            <p class="subtitle"><%= Float.round(@reading.average_humidity_24hrs, 1) %>%</p>
           </article>
           <article class="tile is-child notification is-info">
             <p class="title">Max Humidity</p>
-            <p class="subtitle"><%= @reading.max_humidity |> Decimal.from_float() |> Decimal.round(1) %>%</p>
+            <p class="subtitle"><%= Float.round(@reading.max_humidity, 1) %>%</p>
           </article>
           <article class="tile is-child notification is-info">
             <p class="title">Min Humidity</p>
-            <p class="subtitle"><%= @reading.min_humidity |> Decimal.from_float() |> Decimal.round(1) %>%</p>
+            <p class="subtitle"><%= Float.round(@reading.min_humidity, 1) %>%</p>
           </article>
         </div>
         <div class="tile is-parent is-vertical">
           <article class="tile is-child notification">
             <p class="title">Pressure</p>
-            <p class="subtitle"><%= @reading.pressure %> mb</p>
+            <p class="subtitle"><%= @reading.pressure %> bars</p>
           </article>
           <!-- FIXME: move this logic into the ReadingLiveController -->
           <article class="tile is-child notification
@@ -77,7 +77,7 @@
           </article>
           <article class="tile is-child notification">
             <p class="title">Dust Concentration</p>
-            <p class="subtitle"><%= @reading.dust_concentration |> Decimal.from_float() |> Decimal.round(0) %> pcs/ltr</p>
+            <p class="subtitle"><%= Kernel.trunc(@reading.dust_concentration) %> pcs/ltr</p>
           </article>
           <article class="tile is-child notification">
             <p class="title">Total Readings</p>
