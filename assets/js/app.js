@@ -26,7 +26,7 @@ hooks.temperature_chart = {
 
         var temperature_chart = new Chart(ctx, {
             // The type of chart we want to create
-            type: 'bar',
+            type: 'line',
             // The data for our dataset
             data: {
                 labels: ['0s', '5s', '10s', '15s',
@@ -40,7 +40,7 @@ hooks.temperature_chart = {
                 datasets: [{
                     label: 'Temperature °C',
                     backgroundColor: 'rgb(34, 208, 178)',
-                    borderColor: 'rgb(34, 208, 178)'
+                    borderColor: 'rgb(200, 200, 200)'
                 }]
             },
             // Configuration options go here

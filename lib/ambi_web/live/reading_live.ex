@@ -28,11 +28,11 @@ defmodule AmbiWeb.ReadingLive do
 
   defp get_temperatures do
     list = Ambi.get_temperatures_over_120s()
-    Enum.flat_map(list, fn ({value}) -> [Float.round(value, 1)] end)
+    Enum.flat_map(list, fn ({value}) -> [Float.round(value)] end)
   end
 
   defp get_humidities do
     list = Ambi.get_humidities_over_120s()
-    Enum.flat_map(list, fn ({value}) -> [Float.round(value, 1)] end)
+    Enum.flat_map(list, fn ({value}) -> [Float.round(value)] end)
   end
 end
