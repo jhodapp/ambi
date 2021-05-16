@@ -18,6 +18,8 @@ To run ambi in a Docker container along with another one for Postgresql 11:
  * Run the Ecto DB migrations inside the web container: `docker-compose run web mix ecto.migrate`
  * Run the application in the container: `docker-compose up`
 
+ Note: this basic Docker setup was done following this [guide](https://dev.to/hlappa/development-environment-for-elixir-phoenix-with-docker-and-docker-compose-2g17)
+
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
 ## Learn more
