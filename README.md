@@ -1,5 +1,10 @@
 # Ambi
 
+Ambi is a web service that presents a Phoenix LiveView frontend to display real time ambient room conditions
+like temperature, humidity, pressure, air quality, dust concentration, etc. It uses the Bulma CSS framework
+for some attractive base UI components and Phoenix LiveView to push updates to the client with no page
+refresh needed.
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
@@ -8,6 +13,17 @@ To start your Phoenix server:
   * Start Phoenix endpoint with `mix phx.server`
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+
+## Running in a Docker container
+
+To run ambi in a Docker container along with another one for Postgresql 11:
+
+ * Build the web/DB containers: `docker-compose build`
+ * Create the DB in the DB container: `docker-compose run web mix ecto.create`
+ * Run the Ecto DB migrations inside the web container: `docker-compose run web mix ecto.migrate`
+ * Run the application in the container: `docker-compose up`
+
+ Note: this basic Docker setup was done following this [guide](https://dev.to/hlappa/development-environment-for-elixir-phoenix-with-docker-and-docker-compose-2g17)
 
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
