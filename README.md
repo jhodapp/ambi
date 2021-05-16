@@ -1,5 +1,10 @@
 # Ambi
 
+Ambi is a web service that presents a Phoenix LiveView frontend to display real time ambient room conditions
+like temperature, humidity, pressure, air quality, dust concentration, etc. It uses the Bulma CSS framework
+for some attractive base UI components and Phoenix LiveView to push updates to the client with no page
+refresh needed.
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
