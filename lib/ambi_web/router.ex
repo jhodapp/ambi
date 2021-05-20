@@ -26,6 +26,11 @@ defmodule AmbiWeb.Router do
 
     # API endpoint to add a new sensor reading to the database
     post "/readings/add", ApiController, :add_reading
+
+    # API endpoint to set general reading metadata (e.g. timestamp resolution in secs)
+    post "/reading_metadata/set", ApiController, :set_metadata
+
+    # API endpoint that clear out the DB of all readings
     get "/readings/reset", ApiController, :reset
   end
 

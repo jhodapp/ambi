@@ -33,7 +33,20 @@
           </article>
         </div>
         <div class="tile is-parent is-vertical">
-          <article class="tile is-child notification">
+          <article class="tile is-child notification
+          <%= cond do %>
+              <%= @reading.humidity < 25 -> %>
+                is-danger
+              <%= @reading.humidity >= 25 and @reading.humidity < 30 -> %>
+                is-warning
+              <%= @reading.humidity >= 50 and @reading.humidity < 60 -> %>
+                is-warning
+              <%= @reading.humidity >= 60 -> %>
+                is-danger
+              <%= true -> %>
+                notification
+            <%= end %>
+          ">
             <p class="title">Humidity</p>
             <p class="subtitle"><%= Float.round(@reading.humidity, 1) %>%</p>
           </article>

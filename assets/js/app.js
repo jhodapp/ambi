@@ -60,19 +60,18 @@ hooks.humidity_chart = {
 
         var humidity_chart = new Chart(ctx, {
             // The type of chart we want to create
-            type: 'line',
+            type: 'bar',
             // The data for our dataset
             data: {
-                labels: ['0s', '5s', '10s', '15s',
-                            '20s', '25s', '30s', '35s',
-                            '40s', '45s', '50s', '55s',
-                            '60s', '65s', '70s', '75s',
-                            '80s', '85s', '90s', '95s',
-                            '100s', '105s', '110s', '115s',
-                            '120s'
+                labels: ['24', '23', '22', '21',
+                         '20', '19', '18', '17',
+                         '16', '15', '14', '13',
+                         '12', '11', '10', '9',
+                         '8', '7', '6', '5',
+                         '4', '3', '2', '1'
                         ],
                 datasets: [{
-                    label: 'Humidity %',
+                    label: 'Avg Humidity % 24 hrs',
                     backgroundColor: 'rgb(57, 154, 218)',
                     borderColor: 'rgb(200, 200, 200)'
                 }]

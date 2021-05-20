@@ -8,6 +8,13 @@ defmodule AmbiWeb.ApiController do
     render(conn, "api_response.json", status: status)
   end
 
+  def set_metadata(conn, params) do
+    Ambi.set_reading_metadata(params)
+
+    status = %{code: "ok", desc: "Reading metadata set successfully"}
+    render(conn, "api_response.json", status: status)
+  end
+
   def reset(conn, _params) do
     Ambi.reset_readings()
     html(conn, """

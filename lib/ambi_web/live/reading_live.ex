@@ -24,15 +24,16 @@ defmodule AmbiWeb.ReadingLive do
     }
   end
 
-  #defp get_points, do: 1..7 |> Enum.map(fn _ -> :rand.uniform(100) end)
-
   defp get_temperatures do
     list = Ambi.get_temperatures_over_120s()
     Enum.flat_map(list, fn ({value}) -> [Float.round(value)] end)
   end
 
   defp get_humidities do
-    list = Ambi.get_humidities_over_120s()
-    Enum.flat_map(list, fn ({value}) -> [Float.round(value)] end)
+    #timestamp_resolution_seconds = Ambi.get_timestamp_resolution_seconds()
+    #Logger.debug "****** #{inspect(timestamp_resolution_seconds)}"
+    #label_every_nth_point = div(86000, timestamp_resolution_seconds)
+
+    Ambi.get_avg_humidities_over_24hrs()
   end
 end
