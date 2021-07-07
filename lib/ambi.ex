@@ -139,6 +139,27 @@ defmodule Ambi do
     Repo.all(query)
   end
 
+  def get_avg_temperature_over_1hr(hour) do
+    n_hours_ago = Timex.shift(Timex.now, hours: hour, minutes: 0)
+    nm_hours_ago = Timex.shift(Timex.now, hours: hour+1, minutes: 0)
+
+    query =
+      from r in Ambi.Reading,
+      order_by: [desc: :inserted_at],
+      where: r.inserted_at >= ^n_hours_ago and r.inserted_at < ^nm_hours_ago,
+      select: {r.temperature}
+
+    Repo.aggregate(query, :avg, :temperature)
+  end
+
+  def get_avg_temperatures_over_24hrs() do
+    # Iterate over the last 24 hours and get the average temperature over each
+    # 1 hour segment
+    Enum.map_every(-24..-1, 1, fn hour ->
+      get_avg_temperature_over_1hr(hour)
+    end)
+  end
+
   def get_average_humidity() do
     Repo.aggregate(Ambi.Reading, :avg, :humidity)
   end

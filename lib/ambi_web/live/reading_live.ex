@@ -25,8 +25,7 @@ defmodule AmbiWeb.ReadingLive do
   end
 
   defp get_temperatures do
-    list = Ambi.get_temperatures_over_120s()
-    Enum.flat_map(list, fn ({value}) -> [Float.round(value)] end)
+    Ambi.get_avg_temperatures_over_24hrs()
   end
 
   defp get_humidities do
