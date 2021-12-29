@@ -6,6 +6,9 @@
     "deploy": "webpack --mode production",
     "watch": "webpack --mode development --watch"
   },
+  "engines": {
+    "node": "14.18.1"
+  },
   "dependencies": {
     "bulma": "^0.9.2",
     "nprogress": "^0.2.0",
