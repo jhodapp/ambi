@@ -5,9 +5,31 @@ like temperature, humidity, pressure, air quality, dust concentration, etc. It u
 for some attractive base UI components and Phoenix LiveView to push updates to the client with no page
 refresh needed.
 
-What Ambi's web-based UI looks like as of July, 2021
+What Ambi's web-based UI looks like as of December, 2021
 
 <img width="1568" alt="Screen Shot 2021-07-06 at 10 00 20 PM" src="https://user-images.githubusercontent.com/3219120/124693833-b2764e80-dea5-11eb-8e3c-36dfb6ed2d48.png">
+
+## Install Postgresql
+
+For macOS the [Postgreql.app](https://postgresapp.com/) is the easiest and best option for your local development machine. Version 12
+is the most tested version of the DB at the time of writing.
+
+For Linux, use the system package manager to install Postgresql@12
+
+Keep the local db instance running on port 5432 and make sure to set up a postgres user/password.
+
+## Install Node
+
+Make sure to install [Node.js](https://nodejs.org/en/download/package-manager/), version 14 is the most tested version at the time of writing.
+If you have multiple versions of Node installed, make sure that version 14 is run when running `node -v` from a command line.
+
+E.g.:
+```
+$ node -v
+v14.18.2
+```
+
+## Starting the Ambi backend (Elixir)
 
 To start your Phoenix server:
 
